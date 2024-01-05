@@ -4,6 +4,15 @@ public class Task {
     private Integer taskId;
     private String taskName;
     private  String taskDescription;
+    private String taskStatus;
+
+    public String getTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(String taskStatus) {
+        this.taskStatus = taskStatus;
+    }
 
     public Task(int taskId, String taskName, String taskDescription) {
         this.taskId = taskId;
@@ -11,7 +20,7 @@ public class Task {
         this.taskDescription = taskDescription;
     }
 
-    public void setTaskId(int taskId) {
+    public void setTaskId(Integer taskId) {
         this.taskId = taskId;
     }
 

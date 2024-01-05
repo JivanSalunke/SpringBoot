@@ -3,6 +3,7 @@ package learnspring.springbootdemo.controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -12,12 +13,21 @@ public class TodoController {
     private int newTaskId = 1;
 
     @GetMapping("")
-    public List<Task> getTasks(){
+    public List<Task> getTasks(@RequestParam(required = false) String sort){
+        if( sort!=null && sort.equals("asc")){
+            Collections.sort(tasks,(a,b)->a.getTaskId()-b.getTaskId());
+        }else if(sort!=null && sort.equals("desc")){
+            Collections.sort(tasks,(a,b)->b.getTaskId()-a.getTaskId());
+        }
         return tasks;
     }
 
     @GetMapping("{id}")
     public Task getTaskById(@PathVariable("id") Integer id){
+        return tasks.stream().filter(t->t.getTaskId().equals(id)).findFirst().orElse(null);
+    }
+    @GetMapping("/task")
+    public Task getTaskByParamsId(@RequestParam Integer id) {
         return tasks.stream().filter(t->t.getTaskId().equals(id)).findFirst().orElse(null);
     }
 
@@ -26,6 +36,13 @@ public class TodoController {
         task.setTaskId(newTaskId++);
         tasks.add(task);
         return task;
+    }
+
+    @PutMapping("/updateStatus")
+    public Task updateTaskStatus(@RequestBody Task task){
+        Task updatedTask=tasks.stream().filter(t->t.getTaskId().equals(task.getTaskId())).findFirst().orElse(null);
+        updatedTask.setTaskStatus(task.getTaskStatus());
+        return updatedTask;
     }
 
     @DeleteMapping("/deleteTask/{id}")
