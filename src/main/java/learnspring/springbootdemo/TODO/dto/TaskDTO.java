@@ -1,5 +1,7 @@
 package learnspring.springbootdemo.TODO.dto;
 
+import learnspring.springbootdemo.TODO.model.Task;
+
 public class TaskDTO {
     private Integer id;
     private String taskName;

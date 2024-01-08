@@ -1,4 +1,4 @@
-package learnspring.springbootdemo.TODO;
+package learnspring.springbootdemo.TODO.exception;
 
 public class TaskNotFoundException extends Exception{
     public TaskNotFoundException() {
